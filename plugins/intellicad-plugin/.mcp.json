@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "intellicad-documentation-server": {
+      "type": "http",
+      "url": "http://localhost:3081/mcp"
+    }
+  }
+}

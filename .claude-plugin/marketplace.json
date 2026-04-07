@@ -1,0 +1,13 @@
+{
+  "name": "itc-plugins",
+  "owner": {
+    "name": "IntelliCAD Technology Consortium"
+  },
+  "plugins": [
+    {
+      "name": "intellicad-plugin",
+      "source": "./plugins/intellicad-plugin",
+      "description": "Claude plugin to access CAD functionality and knowledge basics"
+    }
+  ]
+}
