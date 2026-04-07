@@ -13,7 +13,7 @@ The plugin provides AI agent an ability to perform following tasks in context of
 
 ### `intellicad-documentation-server`
 The plugin uses tools from the IntelliCAD documentation server to retrieve information while answering questions.
-More information is available at the MCP server repository `https://mercurial.intellicad.org/ICAD-AI/mcp-documentation-server`.
+More information is available at the [MCP server repository](https://mercurial.intellicad.org/ICAD-AI/mcp-documentation-server).
 
 ## Installation
 
@@ -38,7 +38,7 @@ More information is available at the MCP server repository `https://mercurial.in
 ```json
     "mycad-documentation-server": {
       "type": "http",
-      "url": "http://hostaddress:portnumber/mcp"
+      "url": "https://hostname_or_ipaddress:port_number/mcp"
     }
 ```
 
