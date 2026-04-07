@@ -15,7 +15,19 @@ The plugin provides AI agent an ability to perform following tasks in context of
 
 ## Installation
 
-This plugin is included in the Claude Code repository. The command is automatically available when using Claude Code.
+### Claude Code
+1. Add ITC plugins marketplace:
+`/plugin marketplace add https://mercurial.intellicad.org/ICAD-AI/itc-plugins.git`
+2. Install IntelliCAD plugin:
+`/plugin install intellicad-plugin@itc-plugins`
+
+### Claude Cowork
+1. Open Claude Desktop and switch to the Cowork tab.
+2. Click Customize in the left sidebar.
+3. Click Browse plugins and navigate to the Personal tab.
+4. Click the "+" (Add) button and select Add marketplace from Git.
+5. Enter the repository path `https://mercurial.intellicad.org/ICAD-AI/itc-plugins.git`.
+6. Once synced, find `intellicad-plugin` plugin in the list and click Install.
 
 ## Customizing & Branding
 
