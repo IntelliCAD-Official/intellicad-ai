@@ -30,6 +30,14 @@ More information is available at the [MCP server repository](https://mercurial.i
 4. Click the "+" (Add) button and select Add marketplace from Git.
 5. Enter the repository path `https://mercurial.intellicad.org/ICAD-AI/itc-plugins.git`.
 6. Once synced, find `intellicad-plugin` plugin in the list and click Install.
+7. Enable Auto-Sync: In the marketplace menu (three dots), toggle "Sync automatically" on.
+
+## Update
+
+### Claude Code
+To update ITC plugins:
+1. `/plugin marketplace update itc-plugins`
+2. Restart Claude Code: `/exit`, then `claude` 
 
 ## Customizing & Branding
 
