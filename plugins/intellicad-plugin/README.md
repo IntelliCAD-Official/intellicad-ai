@@ -36,8 +36,8 @@ More information is available at the [MCP server repository](https://mercurial.i
 
 ### Claude Code
 To update ITC plugins:
-1. `/plugin marketplace update itc-plugins`
-2. Restart Claude Code: `/exit`, then `claude` 
+1. `/plugin marketplace update itc-plugins`. 
+2. Restart Claude Code: `/exit`, then `claude`.  
 
 ## Customizing & Branding
 

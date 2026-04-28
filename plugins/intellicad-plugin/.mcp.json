@@ -2,9 +2,9 @@
   "mcpServers": {
     "intellicad-documentation-server": {
       "type": "http",
-      "url": "http://localhost:3081/mcp",
+      "url": "https://mcp.intellicad.org/",
       "headers": {
-        "X-API-Key": "your-permanent-api-key"
+        "X-API-Key": "salkdfj902q09209dk2k"
       }
     }
   }
