@@ -1,5 +1,9 @@
 {
   "mcpServers": {
+    "intellicad-application-server": {
+      "command": "IcadMcpConnector",
+      "args": []
+    },
     "intellicad-documentation-server": {
       "type": "http",
       "url": "http://mcp.intellicad.org:3081/mcp",
