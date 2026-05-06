@@ -11,6 +11,9 @@ The plugin provides AI agent an ability to perform following tasks in context of
 
 ## MCP Servers
 
+### `intellicad-application-server`
+The plugin uses tools exposed by the IntelliCAD application server to query a running IntelliCAD application via COM interface. An AI agent starts the server as a local subprocess and provides a running IntelliCAD process name as an argument.
+
 ### `intellicad-documentation-server`
 The plugin uses tools from the IntelliCAD documentation server to retrieve information while answering questions.
 More information is available at the [MCP server repository](https://mercurial.intellicad.org/ICAD-AI/mcp-documentation-server).
@@ -49,6 +52,7 @@ To update ITC plugins:
       "url": "https://hostname_or_ipaddress:port_number/mcp"
     }
 ```
+Note `intellicad-application-server` server's the first launch argument is running IntelliCAD process name. Change it respectively if the product executable file name is not `icad.exe`.
 
 ## Author
 
