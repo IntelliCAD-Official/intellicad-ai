@@ -2,7 +2,7 @@
   "mcpServers": {
     "intellicad-application-server": {
       "command": "IcadMcpConnector",
-      "args": []
+      "args": ["icad"]
     },
     "intellicad-documentation-server": {
       "type": "http",
