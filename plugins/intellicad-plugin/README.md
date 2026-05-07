@@ -44,7 +44,7 @@ To update ITC plugins:
 
 ## Customizing & Branding
 
-- The file `skills/documentation-assistant/SKILL.md` contains direct instructions for an AI agent, that includes the name of a specific product (e.g. `IntelliCAD`). This product name can be referenced by the agent when answering user questions. Please replace `IntelliCAD` with your own product name in the file.
+- The file `skills/documentation-assistant/SKILL.md` contains direct instructions for an AI agent, that includes the name of a specific product (e.g. `IntelliCAD`). This product name can be referenced by the agent when answering user questions. Please replace `IntelliCAD` with your own product name in the file. Include in the product overview a statement that your product is built on the IntelliCAD platform. This will help the AI agent to semantically link your product with IntelliCAD and solve issues related to the core IntelliCAD.
 - The file `.mcp.json` contains information required for an AI agent to connect to MCP servers. If you have already replaced `IntelliCAD` in the skill definition with your own product name as suggested above (f.i. `MyCAD`), then update the MCP documentation server name in `.mcp.json` so it's as bellow (note, `intellicad` is replaced with `mycad`):
 ```json
     "mycad-documentation-server": {
