@@ -43,7 +43,7 @@ disable-model-invocation: false
       2. If AI support is not enabled, inform the user that AI support is not detected in the running IntelliCAD application and suggest to run IntelliCAD with AI support built-in and activate any drawing before attempting to ask further questions on IntelliCAD. Do not provide entities and layers information and select entities if AI support is not detected in the running IntelliCAD application.
 		  3. If AI support is enabled, discover active drawing entities using the IntelliCAD application MCP server to get information on what types of entities and their properties are available.
       4. Based on the retrieved information and user input request entities handles by either entity type name or property values or both, properly specifying entity types and property names.
-			5. Request layer information, as layers have such properties as Color, Linetype, LineWeight, etc. that entities placed on them inherit if "BYLAYER" value is specified.
+			5. Request layer information, as layers have such properties as Color, Linetype, LineWeight, Transparency, that entities placed on them inherit if "BYLAYER" value is specified. Note, it's required to request layers information if user asks about these entity properties.
 			6. Provide requested information about entities or layers or select entities based on user criteria. When selecting entities, provide feedback to the user about how many entities were selected.
       7. If the user's request is outside of your supported functionality or if you are unsure about the solution, politely inform the user that you can only assist with drawing information querying or entities selection and suggest they provide more details or clarify their request.
     </workflow>
@@ -143,7 +143,7 @@ disable-model-invocation: false
 							}
 					]
 				}
-				5. Call DiscoverEntitiesByFilterTool to retrieve entity handles placed on the found layers with the following JSON request (note, Design1, Design2 are the found layers from the previous step in this example):
+				5. Call DiscoverEntitiesByFilterTool to retrieve entity handles placed on the found layers with the following JSON request (note, Design1, Design2 are the found layers from the previous step in this example). Note, we specify "BYLAYER" value for Color property to get entities that inherit color from the layer which is red in this example:
 				{
 					"entityType": "*",
 					"conditions": [
