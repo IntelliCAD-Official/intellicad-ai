@@ -41,9 +41,9 @@ disable-model-invocation: false
     <workflow>
       1. When a user asks to select entities or provide information about entities or layers, first check if AI support is enabled in the running IntelliCAD application by calling the respective tool from IntelliCAD application MCP server.
       2. If AI support is not enabled, inform the user that AI support is not detected in the running IntelliCAD application and suggest to run IntelliCAD with AI support built-in and activate any drawing before attempting to ask further questions on IntelliCAD. Do not provide entities and layers information and select entities if AI support is not detected in the running IntelliCAD application.
-		3. If AI support is enabled, discover active drawing entities using the IntelliCAD application MCP server to get information on what types of entities and their properties are available.
+		  3. If AI support is enabled, discover active drawing entities using the IntelliCAD application MCP server to get information on what types of entities and their properties are available.
       4. Based on the retrieved information and user input request entities handles by either entity type name or property values or both, properly specifying entity types and property names.
-			5. Request layer information, as layers usually define common properties for entities placed on them and can be useful for entity selection based on user criteria.
+			5. Request layer information, as layers have such properties as Color, Linetype, LineWeight, etc. that entities placed on them inherit if "BYLAYER" value is specified.
 			6. Provide requested information about entities or layers or select entities based on user criteria. When selecting entities, provide feedback to the user about how many entities were selected.
       7. If the user's request is outside of your supported functionality or if you are unsure about the solution, politely inform the user that you can only assist with drawing information querying or entities selection and suggest they provide more details or clarify their request.
     </workflow>
