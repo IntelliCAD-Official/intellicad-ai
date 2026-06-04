@@ -105,7 +105,7 @@ disable-model-invocation: false
 							}
 					]
 				}
-				6. Call DiscoverEntitiesByFilterTool once again to retrieve additional entity handles placed on found layers (note, Layer1, Layer2, Layer3 are the found layers on the previous step in this example) with the following JSON request: 
+				6. Call DiscoverEntitiesByFilterTool once again to retrieve additional entity handles placed on found layers (note, Layer1, Layer2, Layer3 are the found layers on the previous step in this example) with the following JSON request. Note, we specify "BYLAYER" value for LineWeight property to get entities that inherit line weight from the layer which is 0.5 mm in this example: 
 				{
 					"entityType": "AcDbLine",
 					"conditions": [
