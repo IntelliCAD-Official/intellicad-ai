@@ -8,6 +8,7 @@ The plugin provides AI agent an ability to perform following tasks in context of
 - Answer questions based on documentation.
 - Selection based on natural language prompt.
 - Ability to query drawing for information, such as layers list, block usage, etc.
+- Generate and run an LISP program based on natural language prompt.
 
 ## MCP Servers
 
@@ -20,7 +21,7 @@ More information is available at the [MCP server repository](https://mercurial.i
 
 ## Customizing & Branding
 
-- The file `skills/documentation-assistant/SKILL.md` contains direct instructions for an AI agent, that includes the name of a specific product (e.g. `IntelliCAD`). This product name can be referenced by the agent when answering user questions. Please replace `IntelliCAD` with your own product name in the file. Include in the product overview a statement that your product is built on the IntelliCAD platform. This will help the AI agent to semantically link your product with IntelliCAD and solve issues related to the core IntelliCAD.
+- The skill files (`SKILL.md` files in a subdirectory of `skills/`) contain direct instructions for an AI agent, that includes the name of a specific product (e.g. `IntelliCAD`). This product name can be referenced by the agent when answering user questions. Please replace `IntelliCAD` with your own product name in these files. Include in the product overview a statement that your product is built on the IntelliCAD platform. This will help the AI agent to semantically link your product with IntelliCAD and solve issues related to the core IntelliCAD.
 - The file `.mcp.json` contains information required for an AI agent to connect to MCP servers. If you have already replaced `IntelliCAD` in the skill definition with your own product name as suggested above (f.i. `MyCAD`), then update the MCP documentation server name in `.mcp.json` so it's as bellow (note, `intellicad` is replaced with `mycad`):
 ```json
     "mycad-documentation-server": {

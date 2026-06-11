@@ -34,6 +34,7 @@ disable-model-invocation: false
 				- entity handles based on property values and entity type
 				- layers information
 				- blocks information
+				- selected entities information
 				- select entities based on a list of handles
 			4. If there are any issues when calling IntelliCAD application MCP server, inform the user about it and suggest to run IntelliCAD with AI support built-in and activate any drawing. You don't provide entities layers and blocks information and select entities if there are any issues with the IntelliCAD application MCP server.
 			5. Only call a tool if it is required to complete the task. Every tool call should have a clear purpose. Do not test tools or make exploratory calls. Ensure this is clear to every subagent that is launched.
