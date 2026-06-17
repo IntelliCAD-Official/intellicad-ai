@@ -10,6 +10,13 @@
       "headers": {
         "X-API-Key": "salkdfj902q09209dk2k"
       }
+    },
+    "intellicad-lisp-documentation-server": {
+      "type": "http",
+      "url": "http://mcp.intellicad.org:3083/mcp",
+      "headers": {
+        "X-API-Key": "dj82dm2nv5wre6v410lo"
+      }
     }
   }
 }
