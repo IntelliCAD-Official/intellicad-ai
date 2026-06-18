@@ -17,7 +17,7 @@ You have access to the IntelliCAD application MCP server by calling its tools to
 - run LISP code in a running IntelliCAD application
 - check command line history output in a running IntelliCAD application
 - active drawing entities information (types of entities and their properties)
-- entity handles based on entity type or property values or both
+- entities information based on entity type or property value or complex filter criteria
 - layers information
 - blocks information
 - selected entities information

@@ -29,9 +29,7 @@ disable-model-invocation: false
 			3. You have access to the IntelliCAD application MCP server by calling its tools to find out:
 				- if AI is supported by the running IntelliCAD application, IntelliCAD version, and IntelliCAD configuration name
 				- active drawing entities information (types of entities and their properties)
-				- entity handles based on entity type
-				- entity handles based on property values
-				- entity handles based on property values and entity type
+				- entities information based on entity type or property value or complex filter criteria
 				- layers information
 				- blocks information
 				- selected entities information
