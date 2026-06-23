@@ -16,8 +16,10 @@ The plugin provides AI agent an ability to perform following tasks in context of
 The plugin uses tools exposed by the IntelliCAD application server to query a running IntelliCAD application via COM interface. An AI agent starts the server as a local subprocess and provides a running IntelliCAD process name as the first launch argument.
 
 ### `intellicad-documentation-server`
-The plugin uses tools from the IntelliCAD documentation server to retrieve information while answering questions.
-More information is available at the [MCP server repository](https://mercurial.intellicad.org/ICAD-AI/mcp-documentation-server).
+The plugin uses tools from the IntelliCAD documentation server to retrieve information from use documentation while answering questions.
+
+### `intellicad-lisp-documentation-server`
+The plugin uses tools from the IntelliCAD LISP developer documentation server to retrieve information while developing LISP programs.
 
 ## Customizing & Branding
 
