@@ -1,6 +1,6 @@
 # IntelliCAD Assistance Plugin
 
-Claude plugin to access IntelliCAD functionality and knowledge basics.
+AI agent plugin to access IntelliCAD functionality and knowledge basics.
 
 ## Overview
 
@@ -8,7 +8,7 @@ The plugin provides AI agent an ability to perform following tasks in context of
 - Answer questions based on documentation.
 - Selection based on natural language prompt.
 - Ability to query drawing for information, such as layers list, block usage, etc.
-- Generate and run a LISP program based on natural language prompt.
+- Generate and run a LISP program based on natural language prompt. Activate LISP skill using `/lisp-developer` command.
 
 ## MCP Servers
 

@@ -1,13 +1,14 @@
 {
-  "name": "itc-plugins",
+  "name": "intellicad-ai",
   "owner": {
     "name": "IntelliCAD Technology Consortium"
   },
   "plugins": [
     {
-      "name": "intellicad-plugin",
-      "source": "./plugins/intellicad-plugin",
-      "description": "Claude plugin to access CAD functionality and knowledge basics"
+      "name": "intellicad-ai",
+      "source": "./plugins/intellicad-ai",
+      "description": "AI agent plugin to access CAD functionality and knowledge basics",
+      "icon": "./assets/ICAD.png"
     }
   ]
 }
