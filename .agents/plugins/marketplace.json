@@ -1,0 +1,19 @@
+{
+  "name": "intellicad-ai",
+  "interface": {
+    "displayName": "intellicad-ai"
+  },
+  "plugins": [
+    {
+      "name": "intellicad-ai",
+      "source": {
+        "source": "local",
+        "path": "./plugins/intellicad-ai"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      }
+    }
+  ]
+}
