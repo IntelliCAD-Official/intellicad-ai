@@ -270,7 +270,7 @@ function Install-Codex {
     $pluginDone = $true
   } else {
     if ((Try-Run "codex" @("plugin", "marketplace", "add", $RepoUrl)) -and
-        (Try-Run "codex" @("plugin", "install", "intellicad-ai@intellicad-ai"))) {
+        (Try-Run "codex" @("plugin", "add", "intellicad-ai@intellicad-ai"))) {
       Record-Installed "codex"
       $pluginDone = $true
     } else {

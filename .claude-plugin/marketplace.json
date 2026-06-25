@@ -7,8 +7,7 @@
     {
       "name": "intellicad-ai",
       "source": "./plugins/intellicad-ai",
-      "description": "AI agent plugin to access CAD functionality and knowledge basics",
-      "icon": "./assets/ICAD.png"
+      "description": "AI agent plugin to access CAD functionality and knowledge basics"
     }
   ]
 }

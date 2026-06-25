@@ -1,7 +1,0 @@
-{
-  "name": "intellicad-ai",
-  "version": "1.0.0",
-  "description": "AI agent plugin to access CAD functionality and knowledge basics",
-  "skills": "./.agents/skills/",
-  "mcpServers": "./.codex/config.toml"
-}

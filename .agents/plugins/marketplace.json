@@ -1,7 +1,7 @@
 {
   "name": "intellicad-ai",
   "interface": {
-    "displayName": "intellicad-ai"
+    "displayName": "IntelliCAD AI"
   },
   "plugins": [
     {
@@ -13,7 +13,9 @@
       "policy": {
         "installation": "AVAILABLE",
         "authentication": "ON_INSTALL"
-      }
+      },
+      "category": "Productivity",
+      "description": "AI agent plugin to access CAD functionality and knowledge basics"
     }
   ]
 }
