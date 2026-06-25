@@ -56,13 +56,13 @@ EXAMPLES
   install.ps1
   install.ps1 -DryRun
   install.ps1 -Only claude
-  install.ps1 -Only gemini,codex
+  install.ps1 -Only claude,codex
   install.ps1 -List
   install.ps1 -Detect
-  install.ps1 -Detect -Only claude,gemini
+  install.ps1 -Detect -Only claude,codex
   install.ps1 -Uninstall
   install.ps1 -Uninstall -DryRun
-  install.ps1 -Uninstall -Only claude,gemini
+  install.ps1 -Uninstall -Only claude,codex
 URLS THE INSTALLER MAY FETCH FROM
   $GitHubRaw/install.ps1
 "@ | Write-Host
@@ -159,7 +159,7 @@ function Resolve-DetectSpec([string]$spec) {
 #   soft (1 = config-dir-only probe, no CLI on PATH).
 $Providers = @(
   @{ id='claude';      label='Claude Code';        profile='';             detect='command:claude'; soft=0 },
-  @{ id='gemini';      label='Gemini CLI';         profile='';             detect='command:gemini'; soft=0 },
+  #@{ id='gemini';      label='Gemini CLI';         profile='';             detect='command:gemini'; soft=0 },
   @{ id='codex';       label='Codex CLI';          profile='';             detect='command:codex'; soft=0 }
   #@{ id='opencode';    label='OpenCode';           profile='opencode';     detect="command:opencode||file:$HOME\.config\opencode\AGENTS.md"; soft=0 },
   #@{ id='antigravity'; label='Google Antigravity'; profile='antigravity';  detect="dir:$HOME\.gemini\antigravity"; soft=1 }
@@ -406,7 +406,7 @@ if ($FailedIds.Count -gt 0) {
   }
 }
 if ($InstalledIds.Count -eq 0 -and $UninstalledIds.Count -eq 0 -and $SkippedIds.Count -eq 0 -and $FailedIds.Count -eq 0) {
-  Write-Host "  nothing detected. install one of: claude, gemini, codex"
+  Write-Host "  nothing detected. install one of: claude, codex"
   Write-Host "  or pass -Only <agent> to force a specific target (see -List for the full matrix)"
 }
 Write-Host ""
