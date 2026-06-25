@@ -38,7 +38,7 @@ if ($Help) {
 @"
 intellicad-ai installer - detects your agents and installs intellicad-ai for each.
 USAGE
-  install.ps1 [-DryRun] [-Force] [-Only <agent>[,<agent>]] [-List] [-NoColor]
+  install.ps1 [-DryRun] [-Force] [-Only <agent>[,<agent>]] [-List] [-NoColor] [-RepoUrlOverride] [-RepoBranchOverride]
   install.ps1 -Uninstall [-DryRun] [-Only <agent>[,<agent>]] [-NoColor]
   install.ps1 -Detect [-Only <agent>[,<agent>]] [-NoColor]
   irm $GitHubRaw/install.ps1 | iex
@@ -52,6 +52,11 @@ FLAGS
   -Detect          Check whether all supported agents (or those in -Only) are
                    installed. Exits 0 if all are detected, 1 if any are missing.
                    Does not install or modify anything.
+  -RepoUrlOverride <url>  Override the GitHub repo URL for the installer to fetch from.
+                          Should be a git repository URL, ending with .git, 
+                          optionally with a #branch suffix.  
+  -RepoBranchOverride <branch>  Override the official IntelliCAD GitHub repository 
+                                'master' branch for the installer to fetch from.
 EXAMPLES
   install.ps1
   install.ps1 -DryRun
@@ -63,6 +68,7 @@ EXAMPLES
   install.ps1 -Uninstall
   install.ps1 -Uninstall -DryRun
   install.ps1 -Uninstall -Only claude,codex
+  install.ps1 -Only claude -RepoBranchOverride intellicad-15-0
 URLS THE INSTALLER MAY FETCH FROM
   $GitHubRaw/install.ps1
 "@ | Write-Host

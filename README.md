@@ -26,7 +26,7 @@ irm https://raw.githubusercontent.com/IntelliCAD-Official/intellicad-ai/master/i
 | Agent | Command |
 |---|---|
 | **Claude Code** | `claude plugin marketplace add https://github.com/IntelliCAD-Official/intellicad-ai.git ; claude plugin install intellicad-ai@intellicad-ai` |
-| **Codex** | `codex plugin marketplace add https://github.com/IntelliCAD-Official/intellicad-ai.git ; codex plugin install intellicad-ai@intellicad-ai` |
+| **Codex** | `codex plugin marketplace add https://github.com/IntelliCAD-Official/intellicad-ai.git ; codex plugin add intellicad-ai@intellicad-ai` |
 
 ## Author
 
