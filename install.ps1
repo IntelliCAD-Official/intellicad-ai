@@ -314,7 +314,8 @@ function Uninstall-Claude {
     Note "  intellicad-ai plugin is not installed - nothing to remove"
     Record-Skipped "claude" "plugin not installed"
   } else {
-    if (Try-Run "claude" @("plugin", "uninstall", "intellicad-ai@intellicad-ai")) {
+    if ((Try-Run "claude" @("plugin", "uninstall", "intellicad-ai@intellicad-ai")) -and
+        (Try-Run "claude" @("plugin", "marketplace", "remove", "intellicad-ai"))) {
       Record-Uninstalled "claude"
     } else {
       Record-Failed "claude" "claude plugin uninstall failed"
@@ -334,7 +335,8 @@ function Uninstall-Codex {
     Note "  intellicad-ai plugin is not installed - nothing to remove"
     Record-Skipped "codex" "plugin not installed"
   } else {
-    if (Try-Run "codex" @("plugin", "remove", "intellicad-ai@intellicad-ai")) {
+    if ((Try-Run "codex" @("plugin", "remove", "intellicad-ai@intellicad-ai")) -and
+        (Try-Run "codex" @("plugin", "marketplace", "remove", "intellicad-ai"))) {
       Record-Uninstalled "codex"
     } else {
       Record-Failed "codex" "codex plugin uninstall failed"
