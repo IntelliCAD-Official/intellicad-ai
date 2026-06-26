@@ -1,7 +1,7 @@
 # intellicad-ai - multi-agent installer (Windows / PowerShell).
 #
 # One line:
-#   irm https://raw.githubusercontent.com/IntelliCAD-Official/intellicad-ai/master/install.ps1 | iex
+#   irm https://raw.githubusercontent.com/IntelliCAD-Official/intellicad-ai/main/install.ps1 | iex
 #
 # Detects which AI agents are on your machine and installs intellicad-ai for
 # each one using its native distribution (plugin / extension / skill / rule
@@ -25,7 +25,7 @@ param(
 $ErrorActionPreference = "Stop"
 $GitHubRawBase = "https://raw.githubusercontent.com"
 $GitHubRepoName = "IntelliCAD-Official/intellicad-ai"
-$GitHubRaw = "$GitHubRawBase/$GitHubRepoName/master"
+$GitHubRaw = "$GitHubRawBase/$GitHubRepoName/main"
 $RepoUrl = "https://github.com/$GitHubRepoName.git"
 if (-not [string]::IsNullOrWhiteSpace($RepoUrlOverride)) {
   $RepoUrl = $RepoUrlOverride
@@ -56,7 +56,7 @@ FLAGS
                           Should be a git repository URL, ending with .git, 
                           optionally with a #branch suffix.  
   -RepoBranchOverride <branch>  Override the official IntelliCAD GitHub repository 
-                                'master' branch for the installer to fetch from.
+                                'main' branch for the installer to fetch from.
 EXAMPLES
   install.ps1
   install.ps1 -DryRun
