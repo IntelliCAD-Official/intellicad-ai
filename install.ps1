@@ -168,7 +168,7 @@ $Providers = @(
   #@{ id='gemini';      label='Gemini CLI';         profile='';             detect='command:gemini'; soft=0 },
   @{ id='codex';       label='Codex CLI';          profile='';             detect='command:codex'; soft=0 }
   #@{ id='opencode';    label='OpenCode';           profile='opencode';     detect="command:opencode||file:$HOME\.config\opencode\AGENTS.md"; soft=0 },
-  #@{ id='antigravity'; label='Google Antigravity'; profile='antigravity';  detect="dir:$HOME\.gemini\antigravity"; soft=1 }
+  #@{ id='antigravity'; label='Google Antigravity'; profile='';  detect="dir:$HOME\.gemini\antigravity"; soft=1 }
 )
 # ── -List output ────────────────────────────────────────────────────────────
 if ($List) {
@@ -182,8 +182,6 @@ if ($List) {
               elseif ($p.id -eq 'gemini') { 'gemini extensions install' }
               elseif ($p.id -eq 'codex') { 'codex plugin install' }
               else { '' }
-    } else {
-      $mech = "npx skills add ($($p.profile))"
     }
     if ($p.soft -eq 1) { $mech += ' (soft)' }
     Write-Host ("  {0,-13} {1,-22} {2}" -f $p.id, $p.label, $mech)
