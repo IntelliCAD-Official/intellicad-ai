@@ -1,0 +1,33 @@
+{
+  "name": "intellicad-ai",
+  "version": "1.0.0",
+  "description": "AI agent plugin to access CAD functionality and knowledge basics",
+  "author": {
+    "name": "IntelliCAD Technology Consortium",
+    "email": "press@intellicad.org",
+    "url": "https://intellicad.org"
+  },
+  "homepage": "https://github.com/IntelliCAD-Official/intellicad-ai",
+  "repository": "https://github.com/IntelliCAD-Official/intellicad-ai",
+  "license": "Apache License 2.0",
+  "keywords": ["design", "cad"],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "IntelliCAD AI",
+    "shortDescription": "Access CAD functionality and knowledge basics",
+    "longDescription": "AI agent plugin to access CAD functionality and knowledge basics",
+    "developerName": "IntelliCAD Technology Consortium",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://intellicad.org",
+    "privacyPolicyURL": "https://intellicad.org/privacy-policy",
+    "termsOfServiceURL": "https://intellicad.org/terms-of-use",
+    "composerIcon": "./assets/ICAD.png",
+    "logo": "./assets/ICAD.png"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "intellicad-ai",
+  "owner": {
+    "name": "IntelliCAD Technology Consortium"
+  },
+  "plugins": [
+    {
+      "name": "intellicad-ai",
+      "source": "./plugins/intellicad-ai",
+      "description": "AI agent plugin to access CAD functionality and knowledge basics"
+    }
+  ]
+}
