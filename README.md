@@ -4,7 +4,7 @@ The marketplace repository contains plugins that can be installed locally in AI 
 
 ## Install
 
-Execute `install.ps1` script to detect already installed AI agents (Claude Code, Gemini CLI, Codex) and install the plugin for each. Skips what you don't have. Safe to re-run. Note it doesn't install an AI agent app - you will need to install a preferred one first. 
+Execute `install.ps1` script to detect already installed AI agents (currently supported are Claude Code, Codex, Google Antigravity) and install the plugin for each. Skips what you don't have. Safe to re-run. Note it doesn't install an AI agent app - you will need to install a preferred one first. 
 Installation command for Windows (PowerShell):
 ```bash
 irm https://raw.githubusercontent.com/IntelliCAD-Official/intellicad-ai/main/install.ps1 | iex
