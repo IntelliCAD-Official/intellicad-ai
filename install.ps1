@@ -18,7 +18,6 @@ param(
   [switch]$Detect,
   [switch]$NoColor,
   [switch]$Help,
-  [string]$RepoUrlOverride,
   [string]$RepoBranchOverride,
   [string[]]$Only = @()
 )
@@ -27,9 +26,7 @@ $GitHubRawBase = "https://raw.githubusercontent.com"
 $GitHubRepoName = "IntelliCAD-Official/intellicad-ai"
 $GitHubRaw = "$GitHubRawBase/$GitHubRepoName/main"
 $RepoUrl = "https://github.com/$GitHubRepoName.git"
-if (-not [string]::IsNullOrWhiteSpace($RepoUrlOverride)) {
-  $RepoUrl = $RepoUrlOverride
-} elseif (-not [string]::IsNullOrWhiteSpace($RepoBranchOverride)) {
+if (-not [string]::IsNullOrWhiteSpace($RepoBranchOverride)) {
   $GitHubRaw = "$GitHubRawBase/$GitHubRepoName/$RepoBranchOverride"
   $RepoUrl = $RepoUrl + "#$RepoBranchOverride"
 }
@@ -38,7 +35,7 @@ if ($Help) {
 @"
 intellicad-ai installer - detects your agents and installs intellicad-ai for each.
 USAGE
-  install.ps1 [-DryRun] [-Force] [-Only <agent>[,<agent>]] [-List] [-NoColor] [-RepoUrlOverride] [-RepoBranchOverride]
+  install.ps1 [-DryRun] [-Force] [-Only <agent>[,<agent>]] [-List] [-NoColor] [-RepoBranchOverride]
   install.ps1 -Uninstall [-DryRun] [-Only <agent>[,<agent>]] [-NoColor]
   install.ps1 -Detect [-Only <agent>[,<agent>]] [-NoColor]
   irm $GitHubRaw/install.ps1 | iex
@@ -52,9 +49,6 @@ FLAGS
   -Detect          Check whether all supported agents (or those in -Only) are
                    installed. Exits 0 if all are detected, 1 if any are missing.
                    Does not install or modify anything.
-  -RepoUrlOverride <url>  Override the GitHub repo URL for the installer to fetch from.
-                          Should be a git repository URL, ending with .git, 
-                          optionally with a #branch suffix.  
   -RepoBranchOverride <branch>  Override the official IntelliCAD GitHub repository 
                                 'main' branch for the installer to fetch from.
 EXAMPLES
@@ -64,7 +58,7 @@ EXAMPLES
   install.ps1 -Only claude,codex
   install.ps1 -List
   install.ps1 -Detect
-  install.ps1 -Detect -Only claude,codex
+  install.ps1 -Detect -Only claude,antigravity
   install.ps1 -Uninstall
   install.ps1 -Uninstall -DryRun
   install.ps1 -Uninstall -Only claude,codex
@@ -168,7 +162,7 @@ $Providers = @(
   #@{ id='gemini';      label='Gemini CLI';         profile='';             detect='command:gemini'; soft=0 },
   @{ id='codex';       label='Codex CLI';          profile='';             detect='command:codex'; soft=0 }
   #@{ id='opencode';    label='OpenCode';           profile='opencode';     detect="command:opencode||file:$HOME\.config\opencode\AGENTS.md"; soft=0 },
-  #@{ id='antigravity'; label='Google Antigravity'; profile='antigravity';  detect="dir:$HOME\.gemini\antigravity"; soft=1 }
+  @{ id='antigravity'; label='Google Antigravity'; profile='';  detect="dir:$HOME\.gemini\antigravity"; soft=1 }
 )
 # ── -List output ────────────────────────────────────────────────────────────
 if ($List) {
@@ -182,8 +176,6 @@ if ($List) {
               elseif ($p.id -eq 'gemini') { 'gemini extensions install' }
               elseif ($p.id -eq 'codex') { 'codex plugin install' }
               else { '' }
-    } else {
-      $mech = "npx skills add ($($p.profile))"
     }
     if ($p.soft -eq 1) { $mech += ' (soft)' }
     Write-Host ("  {0,-13} {1,-22} {2}" -f $p.id, $p.label, $mech)
@@ -307,6 +299,82 @@ function Install-Gemini {
   }
   Write-Host ""
 }
+function Install-Antigravity {
+  $script:DetectedCount++
+  Say "-> Google Antigravity detected"
+
+  $configDir = Join-Path $HOME ".gemini\config"
+  $pluginDir = Join-Path $configDir "plugins\intellicad-ai"
+  $mcpConfig = Join-Path $configDir "mcp_config.json"
+  $srcBase   = "$GitHubRaw/plugins/intellicad-ai"
+
+  # "Installed" = plugin directory exists.
+  if ((Test-Path $pluginDir -PathType Container) -and -not $Force) {
+    Note "  intellicad-ai plugin already installed (use -Force to reinstall)"
+    Record-Skipped "antigravity" "plugin already installed"
+    Write-Host ""
+    return
+  }
+
+  # Source URL -> local destination.
+  $files = @(
+    @{ url = "$srcBase/.codex-plugin/plugin.json";               dest = (Join-Path $pluginDir "plugin.json") },
+    @{ url = "$srcBase/skills/documentation-assistant/SKILL.md"; dest = (Join-Path $pluginDir "skills\documentation-assistant\SKILL.md") },
+    @{ url = "$srcBase/skills/drafting-assistant/SKILL.md";      dest = (Join-Path $pluginDir "skills\drafting-assistant\SKILL.md") },
+    @{ url = "$srcBase/skills/lisp-developer/SKILL.md";          dest = (Join-Path $pluginDir "skills\lisp-developer\SKILL.md") }
+  )
+
+  if ($DryRun) {
+    foreach ($f in $files) { Note "  would fetch: $($f.url) -> $($f.dest)" }
+    Note "  would merge MCP servers from $srcBase/.mcp.json into $mcpConfig"
+    Record-Installed "antigravity"
+    Write-Host ""
+    return
+  }
+
+  try {
+    # 1. Copy plugin.json + skill files.
+    foreach ($f in $files) {
+      $dir = Split-Path $f.dest -Parent
+      if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
+      Write-Host "  fetch: $($f.url)"
+      $text = (Invoke-WebRequest -Uri $f.url -UseBasicParsing).Content
+      [System.IO.File]::WriteAllText($f.dest, $text)
+    }
+
+    # 2. Merge MCP servers from .mcp.json into mcp_config.json.
+    Write-Host "  fetch: $srcBase/.mcp.json"
+    $mcpText = (Invoke-WebRequest -Uri "$srcBase/.mcp.json" -UseBasicParsing).Content
+    if (-not (Test-Path $configDir)) { New-Item -ItemType Directory -Path $configDir -Force | Out-Null }
+
+    $existingRaw = ""
+    if (Test-Path $mcpConfig -PathType Leaf) { $existingRaw = Get-Content $mcpConfig -Raw }
+
+    if ([string]::IsNullOrWhiteSpace($existingRaw)) {
+      # Empty or missing target: replace it wholesale with .mcp.json.
+      [System.IO.File]::WriteAllText($mcpConfig, $mcpText)
+    } else {
+      # Insert servers into the existing config.
+      $src = $mcpText     | ConvertFrom-Json
+      $dst = $existingRaw | ConvertFrom-Json
+      if (-not $dst.PSObject.Properties.Name -contains 'mcpServers' -or $null -eq $dst.mcpServers) {
+        $dst | Add-Member -NotePropertyName 'mcpServers' -NotePropertyValue ([pscustomobject]@{}) -Force
+      }
+      if ($src.mcpServers) {
+        foreach ($name in $src.mcpServers.PSObject.Properties.Name) {
+          $dst.mcpServers | Add-Member -NotePropertyName $name -NotePropertyValue $src.mcpServers.$name -Force
+        }
+      }
+      ($dst | ConvertTo-Json -Depth 32) | Set-Content -Path $mcpConfig -Encoding UTF8
+    }
+
+    Record-Installed "antigravity"
+  } catch {
+    Write-Host "  $($_.Exception.Message)" -ForegroundColor Red
+    Record-Failed "antigravity" "antigravity file copy / mcp merge failed"
+  }
+  Write-Host ""
+}
 # ── Per-agent uninstall functions ────────────────────────────────────────────
 function Uninstall-Claude {
   $script:DetectedCount++
@@ -370,6 +438,79 @@ function Uninstall-Gemini {
   }
   Write-Host ""
 }
+function Uninstall-Antigravity {
+  $script:DetectedCount++
+  Say "-> Google Antigravity detected"
+
+  $configDir = Join-Path $HOME ".gemini\config"
+  $pluginDir = Join-Path $configDir "plugins\intellicad-ai"
+  $mcpConfig = Join-Path $configDir "mcp_config.json"
+  $mcpDir    = Join-Path $HOME ".gemini\antigravity\mcp"
+  $srcBase   = "$GitHubRaw/plugins/intellicad-ai"
+
+  if (-not (Test-Path $pluginDir -PathType Container) -and -not $Force) {
+    Note "  intellicad-ai plugin is not installed - nothing to remove"
+    Record-Skipped "antigravity" "plugin not installed"
+    Write-Host ""
+    return
+  }
+
+  if ($DryRun) {
+    Note "  would remove: $pluginDir"
+    Note "  would remove MCP servers (from $srcBase/.mcp.json) out of $mcpConfig"
+    Note "  would remove matching MCP server directories under $mcpDir"
+    Record-Uninstalled "antigravity"
+    Write-Host ""
+    return
+  }
+
+  try {
+    # 1. Remove the plugin directory.
+    if (Test-Path $pluginDir -PathType Container) {
+      Write-Host "  remove: $pluginDir"
+      Remove-Item -Path $pluginDir -Recurse -Force
+    }
+
+    # Server names defined by the plugin.
+    Write-Host "  fetch: $srcBase/.mcp.json"
+    $src = (Invoke-WebRequest -Uri "$srcBase/.mcp.json" -UseBasicParsing).Content | ConvertFrom-Json
+    $serverNames = @()
+    if ($src.mcpServers) { $serverNames = $src.mcpServers.PSObject.Properties.Name }
+
+    # 2. Remove the servers defined in .mcp.json from mcp_config.json.
+    if ((Test-Path $mcpConfig -PathType Leaf) -and $serverNames.Count -gt 0) {
+      $existingRaw = Get-Content $mcpConfig -Raw
+      if (-not [string]::IsNullOrWhiteSpace($existingRaw)) {
+        $dst = $existingRaw | ConvertFrom-Json
+        if ($dst.mcpServers) {
+          foreach ($name in $serverNames) {
+            if ($dst.mcpServers.PSObject.Properties.Name -contains $name) {
+              $dst.mcpServers.PSObject.Properties.Remove($name)
+            }
+          }
+          ($dst | ConvertTo-Json -Depth 32) | Set-Content -Path $mcpConfig -Encoding UTF8
+        }
+      }
+    }
+
+    # 3. Remove matching MCP server directories under ~\.gemini\antigravity\mcp.
+    if ((Test-Path $mcpDir -PathType Container) -and $serverNames.Count -gt 0) {
+      foreach ($name in $serverNames) {
+        $serverPath = Join-Path $mcpDir $name
+        if (Test-Path $serverPath -PathType Container) {
+          Write-Host "  remove: $serverPath"
+          Remove-Item -Path $serverPath -Recurse -Force
+        }
+      }
+    }
+
+    Record-Uninstalled "antigravity"
+  } catch {
+    Write-Host "  $($_.Exception.Message)" -ForegroundColor Red
+    Record-Failed "antigravity" "antigravity removal / mcp cleanup failed"
+  }
+  Write-Host ""
+}
 # ── Run the install / uninstall loop ────────────────────────────────────────
 foreach ($p in $Providers) {
   if (-not (Want $p.id)) { continue }
@@ -379,6 +520,7 @@ foreach ($p in $Providers) {
       'claude' { Uninstall-Claude }
       'gemini' { Uninstall-Gemini }
       'codex'  { Uninstall-Codex }
+      'antigravity' { Uninstall-Antigravity }
       default  { Record-Failed $p.id "uninstall function is missing" }
     }
   } else {
@@ -386,6 +528,7 @@ foreach ($p in $Providers) {
       'claude' { Install-Claude }
       'gemini' { Install-Gemini }
       'codex'  { Install-Codex }
+      'antigravity' { Install-Antigravity }
       default  { Record-Failed $p.id "install function is missing" }
     }
   }
@@ -414,12 +557,12 @@ if ($FailedIds.Count -gt 0) {
   }
 }
 if ($InstalledIds.Count -eq 0 -and $UninstalledIds.Count -eq 0 -and $SkippedIds.Count -eq 0 -and $FailedIds.Count -eq 0) {
-  Write-Host "  nothing detected. install one of: claude, codex"
+  Write-Host "  nothing detected. install one of: Claude, Codex, Google Antigravity"
   Write-Host "  or pass -Only <agent> to force a specific target (see -List for the full matrix)"
 }
 Write-Host ""
 if (-not $Uninstall) {
-  Note "  start any session, run IntelliCAD, activate a drawing and ask a question related to IntelliCAD, query your drawing information, ask to select entities or run /lisp-developer in Claude Code to create and execute a LISP program in IntelliCAD"
+  Note "  start any session, run IntelliCAD, activate a drawing and ask a question related to IntelliCAD, query your drawing information, ask to select entities or run /lisp-developer command in your AI agent app to create and execute a LISP program in IntelliCAD"
 }
 Note "  uninstall: install.ps1 -Uninstall"
 # Exit non-zero only when EVERY detected agent failed (and at least one was
